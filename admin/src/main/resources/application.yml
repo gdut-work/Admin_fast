@@ -1,0 +1,19 @@
+### Admin-fast基础配置
+spring:
+## thymeleaf模板设置
+  thymeleaf:
+    prefix: classpath:/templates
+    suffix: .html
+    mode: HTML
+    encoding: utf-8
+    servlet.content-type: text/html
+    cache: false
+
+## 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  profiles:
+    active: app

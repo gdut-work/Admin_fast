@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/template :: header(~{::title},~{::link},~{::style})">
+</head>
+<body>
+    <div class="admin-detail-page">
+        <div class="admin-detail-title">基本信息</div>
+        <table class="layui-table admin-detail-table">
+            <tbody>
+                <tr>
+                    <th width='100px'>客户Id</th>
+                    <td th:text="${appInfo.id}"></td>
+                    <th width='100px'>手机号</th>
+                    <td th:text="${appInfo.phone}"></td>
+                </tr>
+                <tr>
+                    <th>name1</th>
+                    <td colspan="4" th:text="${appInfo.name1}"></td>
+                </tr>
+                <tr>
+                    <th>name2</th>
+                    <td colspan="4" th:text="${appInfo.name2}"></td>
+                </tr>
+                <tr>
+                    <th>name3</th>
+                    <td colspan="4" th:text="${appInfo.name3}"></td>
+                </tr>
+                <tr>
+                    <th>name4</th>
+                    <td colspan="4" th:text="${appInfo.name4}"></td>
+                </tr>
+                <tr>
+                    <th>创建时间</th>
+                    <td th:text="${#dates.format(appInfo.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:replace="/common/fragment :: log(${appInfo})"></div>
+    </div>
+<script th:replace="/common/template :: script"></script>
+</body>
+</html>
