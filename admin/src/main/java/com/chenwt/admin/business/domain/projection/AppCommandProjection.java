@@ -15,6 +15,7 @@ public interface AppCommandProjection {
     String getCommand();
     String getCreateName();
     Date getCreateDate();
+    Byte getStatus();
     Date getUpdateDate();
     String getRemark();
 }

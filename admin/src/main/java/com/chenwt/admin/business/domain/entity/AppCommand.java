@@ -23,7 +23,7 @@ public class AppCommand implements Serializable {
 	private String command;
 	private String remark;
 
-	private Integer status;
+	private Byte status;
 	@CreatedDate
 	private Date createDate;
 	@LastModifiedDate

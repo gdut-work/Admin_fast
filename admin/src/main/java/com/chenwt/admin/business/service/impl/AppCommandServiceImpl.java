@@ -1,15 +1,18 @@
 package com.chenwt.admin.business.service.impl;
 
+import com.chenwt.admin.business.domain.entity.AppCommand;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
 import com.chenwt.admin.business.repository.AppCommandRepository;
 import com.chenwt.admin.business.service.AppCommandService;
 import com.chenwt.common.data.PageSort;
+import com.chenwt.common.enums.StatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @class：AppCommandServiceImpl
@@ -34,5 +37,20 @@ public class AppCommandServiceImpl implements AppCommandService {
     @Override
     public AppCommandProjection findById(Long appCommandId) {
         return appCommandRepository.findByAppCommandId(appCommandId);
+    }
+
+    @Override
+    public AppCommand getById(Long appCommandId) {
+        return appCommandRepository.findById(appCommandId).orElse(null);
+    }
+
+    @Override
+    public AppCommand save(AppCommand appCommand) {
+        return appCommandRepository.save(appCommand);
+    }
+
+    @Override
+    public Boolean updateStatus(StatusEnum statusEnum, List<Long> ids) {
+        return appCommandRepository.updateStatus(statusEnum.getCode(), ids) > 0;
     }
 }

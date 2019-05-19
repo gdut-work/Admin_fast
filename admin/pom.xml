@@ -76,6 +76,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>Admin-fast-${project.version}</finalName>
+        <finalName>app-${project.version}</finalName>
     </build>
 </project>

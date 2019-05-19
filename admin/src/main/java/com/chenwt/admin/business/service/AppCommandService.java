@@ -1,8 +1,13 @@
 package com.chenwt.admin.business.service;
 
+import com.chenwt.admin.business.domain.entity.AppCommand;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
 import com.chenwt.admin.business.domain.projection.AppInfoProjection;
+import com.chenwt.common.enums.StatusEnum;
 import org.springframework.data.domain.Page;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @class：AppCommandService
@@ -25,4 +30,27 @@ public interface AppCommandService {
      * @return
      */
     AppCommandProjection findById(Long appCommandId);
+
+    /**
+     * 获取
+     * @param appCommandId
+     * @return
+     */
+    AppCommand getById(Long appCommandId);
+
+    /**
+     * 保存
+     * @param appCommand
+     * @return
+     */
+    AppCommand save(AppCommand appCommand);
+
+    /**
+     * 更新状态
+     * @param statusEnum
+     * @param ids
+     * @return
+     */
+    @Transactional
+    Boolean updateStatus(StatusEnum statusEnum, List<Long> ids);
 }
