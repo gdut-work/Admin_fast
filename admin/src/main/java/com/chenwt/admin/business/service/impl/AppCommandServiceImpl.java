@@ -28,10 +28,10 @@ public class AppCommandServiceImpl implements AppCommandService {
 
 
     @Override
-    public Page<AppCommandProjection> getPageList(String title) {
+    public Page<AppCommandProjection> getPageList(Byte status, String title) {
         // 创建分页对象
         Pageable page = PageSort.nativePageRequest(Sort.Direction.ASC);
-        return appCommandRepository.getPageList(title,page);
+        return appCommandRepository.getPageList(status,title,page);
     }
 
     @Override

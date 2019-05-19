@@ -1,30 +1,19 @@
 package com.chenwt.admin.business.controller;
 
 import com.chenwt.admin.business.domain.entity.AppCommand;
-import com.chenwt.admin.business.domain.entity.AppInfo;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
-import com.chenwt.admin.business.domain.projection.AppInfoProjection;
 import com.chenwt.admin.business.domain.vo.AppCommandVO;
-import com.chenwt.admin.business.domain.vo.AppInfoVO;
 import com.chenwt.admin.business.service.AppCommandService;
 import com.chenwt.admin.business.validator.AppCommandValid;
-import com.chenwt.admin.system.validator.UserValid;
-import com.chenwt.common.constant.AdminConst;
 import com.chenwt.common.constant.StatusConst;
-import com.chenwt.common.enums.ResultEnum;
 import com.chenwt.common.enums.StatusEnum;
-import com.chenwt.common.exception.ResultException;
 import com.chenwt.common.utils.EntityBeanUtil;
 import com.chenwt.common.utils.ResultVoUtil;
 import com.chenwt.common.utils.StatusUtil;
 import com.chenwt.common.vo.ResultVo;
-import com.chenwt.component.actionLog.action.UserAction;
-import com.chenwt.component.actionLog.annotation.ActionLog;
 import com.chenwt.component.actionLog.annotation.EntityParam;
 import com.chenwt.component.shiro.ShiroUtil;
-import lombok.Data;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +21,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -53,10 +40,8 @@ public class AppCommandController{
     @GetMapping("/index")
     @RequiresPermissions("business:appCommand:index")
     public String index(Model model, AppCommandVO appCommandVO) {
-        AppCommand tt = appCommandService.getById(1L);
         // 获取指令列表
-        Page<AppCommandProjection> list = appCommandService.getPageList(appCommandVO.getTitle());
-
+        Page<AppCommandProjection> list = appCommandService.getPageList(appCommandVO.getStatus(),appCommandVO.getTitle());
         // 封装数据
         model.addAttribute("list", list.getContent());
         model.addAttribute("page", list);
@@ -109,8 +94,10 @@ public class AppCommandController{
             AppCommand beAppCommand = appCommandService.getById(appCommand.getId());
             EntityBeanUtil.copyProperties(beAppCommand, appCommand);
 
+            appCommand.setUpdateBy(ShiroUtil.getSubject().getId());
             appCommand.setUpdateDate(new Date());
         }else{
+            appCommand.setCreateBy(ShiroUtil.getSubject().getId());
             appCommand.setStatus(StatusConst.OK);
             appCommand.setCreateDate(new Date());
         }
@@ -137,6 +124,17 @@ public class AppCommandController{
         } else {
             return ResultVoUtil.error(statusEnum.getMessage() + "失败，请重新操作");
         }
+    }
+
+    /**
+     * 执行指令
+     */
+    @RequestMapping("/exec/{id}")
+    @RequiresPermissions("business:appCommand:exec")
+    public String toExec(@PathVariable("id") Long appCommandId,Model model){
+        // 执行
+        model.addAttribute("appCommandId", appCommandId);
+        return "/business/appCommand/exec";
     }
 
 }

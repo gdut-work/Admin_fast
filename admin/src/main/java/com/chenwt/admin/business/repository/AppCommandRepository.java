@@ -23,6 +23,8 @@ public interface AppCommandRepository extends BaseRepository<AppCommand, Long>, 
     /**
      * 分页查询
      *
+     *
+     * @param status
      * @param title
      * @param page
      * @return
@@ -32,7 +34,7 @@ public interface AppCommandRepository extends BaseRepository<AppCommand, Long>, 
             "t1.title, " +
             "t1.command, " +
             "t2.username as createName, " +
-            "t1.status as status, " +
+            "t1.status, " +
             "t1.create_date as createDate, " +
             "t1.update_date as updateDate, " +
             "t1.remark " +
@@ -42,8 +44,9 @@ public interface AppCommandRepository extends BaseRepository<AppCommand, Long>, 
             "sys_user t2 " +
             "ON t1.create_by = t2.id " +
             "where t1.status != 3 " +
+            "and if(:status is NULL,1=1,t1.status = :status) " +
             "and if(:title is NULL,1=1,t1.title LIKE CONCAT('%', :title,'%'))", nativeQuery = true)
-    Page<AppCommandProjection> getPageList(@Param("title") String title, Pageable page);
+    Page<AppCommandProjection> getPageList(@Param("status")Byte status, @Param("title") String title, Pageable page);
 
     /**
      * 根据id获取
@@ -54,6 +57,7 @@ public interface AppCommandRepository extends BaseRepository<AppCommand, Long>, 
             "t1.id, " +
             "t1.title, " +
             "t1.command, " +
+            "t1.status, " +
             "t2.username as createName, " +
             "t1.create_date as createDate, " +
             "t1.update_date as updateDate, " +

@@ -24,6 +24,8 @@ public class AppCommand implements Serializable {
 	private String remark;
 
 	private Byte status;
+	private Long createBy;
+	private Long updateBy;
 	@CreatedDate
 	private Date createDate;
 	@LastModifiedDate

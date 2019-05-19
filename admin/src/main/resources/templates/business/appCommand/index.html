@@ -13,6 +13,13 @@
         <div class="layui-row admin-card-screen">
             <div class="pull-left layui-form-pane admin-search-box">
                 <div class="layui-inline">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block admin-search-status">
+                        <select class="admin-search-select" name="status" mo:dict="SEARCH_STATUS" mo-selected="${param.status}" mo-empty="全部"></select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
                     <label class="layui-form-label">标题</label>
                     <div class="layui-input-block">
                         <input type="text" name="title" th:value="${param.title}" placeholder="请输入标题" autocomplete="off" class="layui-input">
@@ -29,8 +36,14 @@
                 <button class="layui-btn open-popup" data-title="添加指令" th:attr="data-url=@{/business/appCommand/add}"  data-size="460,357">
                     <i class="fa fa-plus"></i> 添加</button>
 
-                <button class="layui-btn open-popup-param" data-type="radio" data-title="删除指令" th:attr="data-url=@{/business/appCommand/status}"  data-size="600,500">
-                    <i class="fa fa-remove"></i> 删除</button>
+                <div class="btn-group">
+                    <button class="layui-btn">操作<span class="caret"></span></button>
+                    <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                        <dd><a class="ajax-status" th:href="@{/business/appCommand/status/ok}">启用</a></dd>
+                        <dd><a class="ajax-status" th:href="@{/business/appCommand/status/freezed}">冻结</a></dd>
+                        <dd><a class="ajax-status" th:href="@{/business/appCommand/status/delete}">删除</a></dd>
+                    </dl>
+                </div>
             </div>
         </div>
         <div class="admin-table-wrap">
@@ -58,7 +71,7 @@
                     <td th:text="${item.title}">标题</td>
                     <td th:text="${item.command}">指令</td>
                     <td th:text="${item.createName}">创建者</td>
-                    <td th:text="${item.status}">状态</td>
+                    <td th:text="${#dicts.dataStatus(item.status)}">状态</td>
                     <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
                     <td th:text="${#dates.format(item.updateDate, 'yyyy-MM-dd HH:mm:ss')}">更新时间</td>
                     <td th:text="${item.remark}">备注</td>
@@ -66,6 +79,7 @@
                         <a class="open-popup" data-title="编辑指令" th:attr="data-url=@{'/business/appCommand/edit/'+${item.id}}"  data-size="460,357" href="#">编辑</a>
                         <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/business/appCommand/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
                         <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/business/appCommand/status(ids=${item.id})}">删除</a>
+                        <a class="open-popup" data-title="执行指令" th:attr="data-url=@{'/business/appCommand/exec/'+${item.id}}" data-size="800,600" href="#">执行</a>
                     </td>
                 </tr>
                 </tbody>

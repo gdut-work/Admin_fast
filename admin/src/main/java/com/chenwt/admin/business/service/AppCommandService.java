@@ -2,7 +2,6 @@ package com.chenwt.admin.business.service;
 
 import com.chenwt.admin.business.domain.entity.AppCommand;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
-import com.chenwt.admin.business.domain.projection.AppInfoProjection;
 import com.chenwt.common.enums.StatusEnum;
 import org.springframework.data.domain.Page;
 
@@ -19,10 +18,12 @@ import java.util.List;
 public interface AppCommandService {
     /**
      * 分页查询
+     *
+     * @param status
      * @param title
      * @return
      */
-    Page<AppCommandProjection> getPageList(String title);
+    Page<AppCommandProjection> getPageList(Byte status, String title);
 
     /**
      * 根据appCommandId获取

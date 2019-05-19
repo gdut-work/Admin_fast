@@ -15,5 +15,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class AppCommandVO {
+    private Byte status;
     private String title;
 }
