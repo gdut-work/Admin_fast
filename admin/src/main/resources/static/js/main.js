@@ -178,6 +178,31 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
         }
     });
 
+    //post方式异步-按钮button操作状态
+    $(document).on("click", ".ajax-post-button", function () {
+        var checked = [];
+        var url = $(this).attr("data-url");
+
+        //全部操作
+        if ($(this).hasClass("all-param")) {
+            $.post(url, function (result) {
+                $.fn.Messager(result);
+            });
+        }
+
+        var tdcheckbox = $(".admin-table td .admin-checkbox :checkbox:checked");
+        if (tdcheckbox.length > 0) {
+            tdcheckbox.each(function (key, val) {
+                checked.push("ids=" + $(val).attr("value"));
+            });
+            $.post(url, checked.join("&"), function (result) {
+                $.fn.Messager(result);
+            });
+        } else {
+            layer.msg('请选择一条记录');
+        }
+    });
+
     /* 添加/修改弹出层 */
     $(document).on("click", ".open-popup, .open-popup-param", function () {
         var title = $(this).data("title");
