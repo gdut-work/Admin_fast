@@ -188,6 +188,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
             $.post(url, function (result) {
                 $.fn.Messager(result);
             });
+            return;
         }
 
         var tdcheckbox = $(".admin-table td .admin-checkbox :checkbox:checked");

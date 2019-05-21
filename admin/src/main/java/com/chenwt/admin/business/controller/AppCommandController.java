@@ -2,8 +2,11 @@ package com.chenwt.admin.business.controller;
 
 import com.chenwt.admin.business.domain.entity.AppCommand;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
+import com.chenwt.admin.business.domain.projection.AppInfoProjection;
 import com.chenwt.admin.business.domain.vo.AppCommandVO;
+import com.chenwt.admin.business.domain.vo.AppInfoVO;
 import com.chenwt.admin.business.service.AppCommandService;
+import com.chenwt.admin.business.service.AppInfoService;
 import com.chenwt.admin.business.validator.AppCommandValid;
 import com.chenwt.common.constant.StatusConst;
 import com.chenwt.common.enums.StatusEnum;
@@ -33,6 +36,8 @@ import java.util.List;
 public class AppCommandController{
 	@Resource
 	private AppCommandService appCommandService;
+    @Resource
+    private AppInfoService appInfoService;
 
     /**
      * 列表页面
@@ -131,10 +136,28 @@ public class AppCommandController{
      */
     @RequestMapping("/exec/{id}")
     @RequiresPermissions("business:appCommand:exec")
-    public String toExec(@PathVariable("id") Long appCommandId,Model model){
+    public String toExec(@PathVariable("id") Long appCommandId,AppInfoVO appInfoVO, Model model){
         // 执行
+        // 查找出在线用户
+        // 获取客户列表
+        Page<AppInfoProjection> list = appInfoService.getOnlinePageList(appInfoVO.getPhone());
+
+        // 封装数据
         model.addAttribute("appCommandId", appCommandId);
+        model.addAttribute("list", list.getContent());
+        model.addAttribute("page", list);
         return "/business/appCommand/exec";
+    }
+
+    /**
+     * 设置一条或者多条数据的状态
+     */
+    @RequestMapping("/exec")
+    @RequiresPermissions("business:appCommand:exec")
+    @ResponseBody
+    public ResultVo exec(@RequestParam(value = "ids", required = false) List<Long> ids) {
+        //todo
+        return ResultVoUtil.success("发送执行成功，可到响应管理查看客户端执行响应");
     }
 
 }

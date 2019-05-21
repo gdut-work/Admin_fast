@@ -9,7 +9,9 @@ import com.chenwt.admin.business.webosocket.AppWebSocketServer;
 import com.chenwt.admin.business.webosocket.WebSocketMapUtil;
 import com.chenwt.common.data.PageSort;
 import com.google.common.base.Joiner;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -67,6 +69,38 @@ public class AppInfoServiceImpl implements AppInfoService {
     @Override
     public AppInfo findById(Long appInfoId) {
         return appInfoRepository.findById(appInfoId).orElse(null);
+    }
+
+    @Override
+    public Page<AppInfoProjection> getOnlinePageList(String phone) {
+//        /**
+//         * 测试数据
+//         */
+//        {
+//            AppWebSocketServer appWebSocketServer = new AppWebSocketServer();
+//            appWebSocketServer.setPhone("15820242077");
+//            WebSocketMapUtil.put("1111", appWebSocketServer);
+//        }
+
+        Collection<AppWebSocketServer> appWebSocketServerCollection = WebSocketMapUtil.getWebSocketServer();
+
+
+        List<String> onlinePhoneList = new LinkedList<>();
+        if (!appWebSocketServerCollection.isEmpty()){
+            appWebSocketServerCollection.forEach(e->{
+                if (StringUtils.isNotBlank(phone)){
+                    if (e.getPhone().contains(phone)){
+                        onlinePhoneList.add(e.getPhone());
+                    }
+                }else{
+                    onlinePhoneList.add(e.getPhone());
+                }
+            });
+            // 创建分页对象
+            Pageable page = PageSort.pageRequest(Sort.Direction.ASC);
+            return appInfoRepository.findByPhoneIn(onlinePhoneList,page);
+        }
+        return new PageImpl(new LinkedList());
     }
 
 }

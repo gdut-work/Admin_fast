@@ -40,4 +40,11 @@ public interface AppInfoService {
      * @return
      */
     AppInfo findById(Long appInfoId);
+
+    /**
+     * 获取在线客户端
+     * @param phone
+     * @return
+     */
+    Page<AppInfoProjection> getOnlinePageList(String phone);
 }

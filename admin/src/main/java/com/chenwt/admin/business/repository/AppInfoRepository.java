@@ -47,4 +47,12 @@ public interface AppInfoRepository extends JpaRepository<AppInfo, Long>, JpaSpec
             "and if(:status = 1,t.phone in(:onLinePhoneStr),1=1) " +
             "and if(:status = 2,t.phone not in(:onLinePhoneStr),1=1)",nativeQuery = true)
     Page<AppInfoProjection> getPageList(@Param("status") Integer status, @Param("phone") String phone, @Param("onLinePhoneStr") String onLinePhoneStr, Pageable page);
+
+    /**
+     * 根据号码查询
+     * @param onlinePhoneList
+     * @param page
+     * @return
+     */
+    Page<AppInfoProjection> findByPhoneIn(@Param("onlinePhoneList")List<String> onlinePhoneList,Pageable page);
 }
