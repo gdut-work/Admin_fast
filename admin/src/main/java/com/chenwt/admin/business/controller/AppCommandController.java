@@ -8,6 +8,8 @@ import com.chenwt.admin.business.domain.vo.AppInfoVO;
 import com.chenwt.admin.business.service.AppCommandService;
 import com.chenwt.admin.business.service.AppInfoService;
 import com.chenwt.admin.business.validator.AppCommandValid;
+import com.chenwt.admin.business.webosocket.AppWebSocketServer;
+import com.chenwt.admin.business.webosocket.WebSocketMapUtil;
 import com.chenwt.common.constant.StatusConst;
 import com.chenwt.common.enums.StatusEnum;
 import com.chenwt.common.utils.EntityBeanUtil;
@@ -24,6 +26,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -134,7 +137,7 @@ public class AppCommandController{
     /**
      * 执行指令
      */
-    @RequestMapping("/exec/{id}")
+    @RequestMapping("/toExec/{id}")
     @RequiresPermissions("business:appCommand:exec")
     public String toExec(@PathVariable("id") Long appCommandId,AppInfoVO appInfoVO, Model model){
         // 执行
@@ -152,11 +155,12 @@ public class AppCommandController{
     /**
      * 设置一条或者多条数据的状态
      */
-    @RequestMapping("/exec")
+    @RequestMapping("/exec/{appCommandId}")
     @RequiresPermissions("business:appCommand:exec")
     @ResponseBody
-    public ResultVo exec(@RequestParam(value = "ids", required = false) List<Long> ids) {
-        //todo
+    public ResultVo exec(@PathVariable("appCommandId") Long appCommandId,@RequestParam(value = "ids", required = false) List<Long> ids) {
+
+//        appCommandService.exec(appCommandId,ids);
         return ResultVoUtil.success("发送执行成功，可到响应管理查看客户端执行响应");
     }
 

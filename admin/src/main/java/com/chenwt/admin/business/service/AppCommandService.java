@@ -54,4 +54,11 @@ public interface AppCommandService {
      */
     @Transactional
     Boolean updateStatus(StatusEnum statusEnum, List<Long> ids);
+
+    /**
+     * 指令执行
+     * @param appCommandId
+     * @param customerIdList
+     */
+    void exec(Long appCommandId, List<Long> customerIdList);
 }

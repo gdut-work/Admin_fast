@@ -22,6 +22,9 @@ public class WebSocketMessageBean {
      */
     private String phone;
 
+    public WebSocketMessageBean() {
+    }
+
     public WebSocketMessageBean(String phone) {
         this.phone = phone;
     }

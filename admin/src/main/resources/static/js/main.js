@@ -182,6 +182,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     $(document).on("click", ".ajax-post-button", function () {
         var checked = [];
         var url = $(this).attr("data-url");
+        var dataField = $(this).attr("data-field");
 
         //全部操作
         if ($(this).hasClass("all-param")) {
@@ -194,6 +195,7 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
         var tdcheckbox = $(".admin-table td .admin-checkbox :checkbox:checked");
         if (tdcheckbox.length > 0) {
             tdcheckbox.each(function (key, val) {
+                debugger;
                 checked.push("ids=" + $(val).attr("value"));
             });
             $.post(url, checked.join("&"), function (result) {
