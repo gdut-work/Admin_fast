@@ -30,7 +30,7 @@
                     <div class="btn-group-left">
                         <button class="layui-btn ajax-post-button" th:attr="data-url=@{'/business/appCommand/exec'+${appCommandId}}">
                             <i class="fa fa-send"></i> 勾选发送</button>
-                        <button class="layui-btn ajax-post-button all-param" th:attr="data-field='phone',data-url=@{'/business/appCommand/exec/'+${appCommandId}}">
+                        <button class="layui-btn ajax-post-button all-param" th:attr="data-url=@{'/business/appCommand/exec/'+${appCommandId}}">
                             <i class="fa fa-send-o"></i> 全部发送</button>
                     </div>
                 </div>

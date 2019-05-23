@@ -103,4 +103,9 @@ public class AppInfoServiceImpl implements AppInfoService {
         return new PageImpl(new LinkedList());
     }
 
+    @Override
+    public List<AppInfo> findByAppInfoIdList(List<Long> appInfoIdList) {
+        return appInfoRepository.findByIdIn(appInfoIdList);
+    }
+
 }

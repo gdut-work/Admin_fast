@@ -58,7 +58,7 @@ public interface AppCommandService {
     /**
      * 指令执行
      * @param appCommandId
-     * @param customerIdList
+     * @param appInfoIdList
      */
-    void exec(Long appCommandId, List<Long> customerIdList);
+    void exec(Long appCommandId, List<Long> appInfoIdList);
 }

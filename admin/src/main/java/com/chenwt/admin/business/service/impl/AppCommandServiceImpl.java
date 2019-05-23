@@ -1,10 +1,12 @@
 package com.chenwt.admin.business.service.impl;
 
 import com.chenwt.admin.business.domain.entity.AppCommand;
+import com.chenwt.admin.business.domain.entity.AppInfo;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
 import com.chenwt.admin.business.domain.websocket.WebSocketMessageBean;
 import com.chenwt.admin.business.repository.AppCommandRepository;
 import com.chenwt.admin.business.service.AppCommandService;
+import com.chenwt.admin.business.service.AppInfoService;
 import com.chenwt.admin.business.webosocket.AppWebSocketServer;
 import com.chenwt.admin.business.webosocket.WebSocketMapUtil;
 import com.chenwt.admin.business.webosocket.WebSocketMessageTaskFactory;
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @class：AppCommandServiceImpl
@@ -31,7 +34,8 @@ import java.util.List;
 public class AppCommandServiceImpl implements AppCommandService {
     @Resource
     private AppCommandRepository appCommandRepository;
-
+    @Resource
+    private AppInfoService appInfoService;
 
     @Override
     public Page<AppCommandProjection> getPageList(Byte status, String title) {
@@ -61,7 +65,7 @@ public class AppCommandServiceImpl implements AppCommandService {
     }
 
     @Override
-    public void exec(Long appCommandId, List<Long> customerIdList) {
+    public void exec(Long appCommandId, List<Long> appInfoIdList) {
         //todo
         AppCommand appCommand = getById(appCommandId);
         if (null != appCommand){
@@ -73,26 +77,30 @@ public class AppCommandServiceImpl implements AppCommandService {
                 return;
             }
 
-            if (null == customerIdList){
+            List<WebSocketMessageBean> webSocketMessageBeanList = new LinkedList<>();
+            if (null == appInfoIdList){
                 //全部发送(手机号码为空)
-                WebSocketMessageBean webSocketMessageBean = new WebSocketMessageBean();
-                webSocketMessageBean.setData(command);
-                WebSocketMessageTaskFactory.submitWebSocketMessageTaskPool(webSocketMessageBean);
-            }else{
-                //勾选发送
-                List<WebSocketMessageBean> webSocketMessageBeanList = new LinkedList<>();
                 appWebSocketServerCollection.forEach(e->{
-                    if (customerIdList.contains(e.getPhone())){
-
-                    }
                     WebSocketMessageBean webSocketMessageBean = new WebSocketMessageBean();
+                    webSocketMessageBean.setData(command);
                     webSocketMessageBean.setPhone(e.getPhone());
+                    webSocketMessageBeanList.add(webSocketMessageBean);
                 });
-
-                if (0 < webSocketMessageBeanList.size()){
-                    //                WebSocketMessageTaskFactory.submitBatchWebSocketMessageTaskPool(webSocketMessageBean);
-
-                }
+            }else{
+                List<AppInfo> appInfoList = appInfoService.findByAppInfoIdList(appInfoIdList);
+                List<String> phoneList = appInfoList.stream().map(AppInfo::getPhone).distinct().collect(Collectors.toList());
+                //勾选发送
+                appWebSocketServerCollection.forEach(e->{
+                    if (phoneList.contains(e.getPhone())){
+                        WebSocketMessageBean webSocketMessageBean = new WebSocketMessageBean();
+                        webSocketMessageBean.setData(command);
+                        webSocketMessageBean.setPhone(e.getPhone());
+                        webSocketMessageBeanList.add(webSocketMessageBean);
+                    }
+                });
+            }
+            if (0 < webSocketMessageBeanList.size()){
+                WebSocketMessageTaskFactory.submitBatchWebSocketMessageTaskPool(webSocketMessageBeanList);
             }
         }
     }

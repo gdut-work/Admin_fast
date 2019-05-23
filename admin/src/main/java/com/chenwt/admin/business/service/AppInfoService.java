@@ -4,6 +4,8 @@ import com.chenwt.admin.business.domain.entity.AppInfo;
 import com.chenwt.admin.business.domain.projection.AppInfoProjection;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * @interface：AppInfoService
  * @campany：zkzj
@@ -47,4 +49,11 @@ public interface AppInfoService {
      * @return
      */
     Page<AppInfoProjection> getOnlinePageList(String phone);
+
+    /**
+     * 根据获取
+     * @param appInfoIdList
+     * @return
+     */
+    List<AppInfo> findByAppInfoIdList(List<Long> appInfoIdList);
 }

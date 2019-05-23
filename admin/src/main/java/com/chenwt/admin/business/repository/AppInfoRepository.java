@@ -55,4 +55,11 @@ public interface AppInfoRepository extends JpaRepository<AppInfo, Long>, JpaSpec
      * @return
      */
     Page<AppInfoProjection> findByPhoneIn(@Param("onlinePhoneList")List<String> onlinePhoneList,Pageable page);
+
+    /**
+     * 查找
+     * @param appInfoIdList
+     * @return
+     */
+    List<AppInfo> findByIdIn(List<Long> appInfoIdList);
 }
