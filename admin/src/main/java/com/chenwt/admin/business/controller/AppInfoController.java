@@ -4,16 +4,17 @@ import com.chenwt.admin.business.domain.entity.AppInfo;
 import com.chenwt.admin.business.domain.projection.AppInfoProjection;
 import com.chenwt.admin.business.domain.vo.AppInfoVO;
 import com.chenwt.admin.business.service.AppInfoService;
+import com.chenwt.common.utils.ResultVoUtil;
+import com.chenwt.common.vo.ResultVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author chenwt
@@ -51,4 +52,15 @@ public class AppInfoController implements Serializable {
 		return "/business/appInfo/detail";
 	}
 
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/delete")
+	@RequiresPermissions("business:appInfo:delete")
+	@ResponseBody
+	public ResultVo delete(@RequestParam(value = "ids", required = false) List<Long> ids){
+		//todo
+//		appInfoService.deleteById(id);
+		return ResultVoUtil.DELETE_SUCCESS;
+	}
 }

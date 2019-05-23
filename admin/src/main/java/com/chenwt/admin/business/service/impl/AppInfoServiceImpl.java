@@ -108,4 +108,9 @@ public class AppInfoServiceImpl implements AppInfoService {
         return appInfoRepository.findByIdIn(appInfoIdList);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        appInfoRepository.deleteById(id);
+    }
+
 }

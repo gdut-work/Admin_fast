@@ -6,15 +6,15 @@ import com.chenwt.admin.business.domain.projection.AppResponseProjection;
 import com.chenwt.admin.business.domain.vo.AppInfoVO;
 import com.chenwt.admin.business.domain.vo.AppResponseVO;
 import com.chenwt.admin.business.service.AppResponseService;
+import com.chenwt.common.utils.ResultVoUtil;
+import com.chenwt.common.vo.ResultVo;
 import lombok.Data;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.persistence.*;
@@ -55,5 +55,21 @@ public class AppResponseController {
 		AppResponseProjection appResponseProjection = appResponseService.findById(appResponseId);
 		model.addAttribute("appResponse", appResponseProjection);
 		return "/business/appResponse/detail";
+	}
+
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/delete")
+	@RequiresPermissions("business:appResponse:delete")
+	@ResponseBody
+	public ResultVo delete(@RequestParam(value = "ids", required = false) Long id){
+		if (id != null){
+			appResponseService.deleteById(id);
+			return ResultVoUtil.success("删除响应成功");
+		}else {
+			appResponseService.deleteAll();
+			return ResultVoUtil.success("清空响应成功");
+		}
 	}
 }

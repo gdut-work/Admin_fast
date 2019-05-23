@@ -32,4 +32,15 @@ public interface AppResponseService {
      * @return
      */
     AppResponseProjection findById(Long appResponseId);
+
+    /**
+     * 删除操作
+     * @param id
+     */
+    void deleteById(Long id);
+
+    /**
+     * 清空响应
+     */
+    void deleteAll();
 }

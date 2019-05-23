@@ -40,4 +40,14 @@ public class AppResponseServiceImpl implements AppResponseService {
     public AppResponseProjection findById(Long appResponseId) {
         return appResponseRepository.findByAppResponseId(appResponseId);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        appResponseRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        appResponseRepository.deleteAll();
+    }
 }

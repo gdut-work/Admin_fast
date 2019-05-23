@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="pull-right screen-btn-group">
-                <button class="layui-btn open-popup-param" data-type="radio" data-title="删除响应" th:attr="data-url=@{/business/appResponse/delete}"  data-size="600,500">
-                    <i class="fa fa-remove"></i> 删除</button>
+                <a class="layui-btn ajax-get" data-msg="您是否确认清空响应" th:href="@{/usiness/appResponse/delete}">
+                    <i class="fa fa-trash"></i> 清空响应</a>
             </div>
         </div>
         <div class="admin-table-wrap">

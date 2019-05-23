@@ -56,4 +56,10 @@ public interface AppInfoService {
      * @return
      */
     List<AppInfo> findByAppInfoIdList(List<Long> appInfoIdList);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void deleteById(Long id);
 }
