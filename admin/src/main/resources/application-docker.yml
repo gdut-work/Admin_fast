@@ -12,16 +12,16 @@ project:
     global-session-timeout: 1800              #Session会话超时时间，默认30分钟（秒）
   upload:
     #file-path:                               #文件上传路径，默认在项目根目录upload下
-    static-path: /upload/**                   #上传文件静态访问路径
+    static-path: /app                         #上传文件静态访问路径 /upload/**
 
 ### spring配置
 spring:
 ## 数据库配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://183.6.131.226:3406/timo?useSSL=false&characterEncoding=utf-8
-    username: root
-    password: zkzjzkzj*
+    url: jdbc:mysql://app-mysql:3306/app?useSSL=false&characterEncoding=utf-8
+    username: app
+    password: app123456
 
 ## jpa配置
   jpa:

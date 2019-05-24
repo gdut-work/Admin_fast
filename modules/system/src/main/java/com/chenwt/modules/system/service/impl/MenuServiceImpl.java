@@ -29,7 +29,7 @@ public class MenuServiceImpl implements MenuService {
      * @param id 菜单ID
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Menu getById(Long id) {
         if (id == 0L){
             return new Menu(id, "顶级菜单", "");
@@ -42,7 +42,7 @@ public class MenuServiceImpl implements MenuService {
      * @param url 菜单url
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Menu getByUrl(String url){
         return menuRepository.findByUrl(url);
     }
@@ -117,7 +117,7 @@ public class MenuServiceImpl implements MenuService {
      * 状态(启用，冻结，删除)/批量状态处理
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateStatus(StatusEnum statusEnum, List<Long> ids){
         // 获取与之关联的所有菜单
         Set<Menu> treeMenus = new HashSet<>();

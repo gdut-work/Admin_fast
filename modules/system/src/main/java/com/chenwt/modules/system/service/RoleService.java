@@ -20,7 +20,7 @@ public interface RoleService {
      * 获取用户角色列表
      * @param id 用户ID
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     Set<Role> getUserOkRoleList(Long id);
 
     /**
@@ -33,7 +33,7 @@ public interface RoleService {
      * 根据角色ID查询角色数据
      * @param id 角色ID
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     Role getById(Long id);
 
     /**
@@ -64,6 +64,6 @@ public interface RoleService {
     /**
      * 状态(启用，冻结，删除)/批量状态处理
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     Boolean updateStatus(StatusEnum statusEnum, List<Long> idList);
 }

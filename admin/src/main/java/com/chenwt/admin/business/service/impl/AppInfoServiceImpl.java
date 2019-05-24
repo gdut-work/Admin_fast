@@ -73,14 +73,14 @@ public class AppInfoServiceImpl implements AppInfoService {
 
     @Override
     public Page<AppInfoProjection> getOnlinePageList(String phone) {
-        /**
-         * 测试数据
-         */
-        {
-            AppWebSocketServer appWebSocketServer = new AppWebSocketServer();
-            appWebSocketServer.setPhone("15820242077");
-            WebSocketMapUtil.put("1111", appWebSocketServer);
-        }
+//        /**
+//         * 测试数据
+//         */
+//        {
+//            AppWebSocketServer appWebSocketServer = new AppWebSocketServer();
+//            appWebSocketServer.setPhone("15820242077");
+//            WebSocketMapUtil.put("1111", appWebSocketServer);
+//        }
 
         Collection<AppWebSocketServer> appWebSocketServerCollection = WebSocketMapUtil.getWebSocketServer();
 
@@ -111,6 +111,11 @@ public class AppInfoServiceImpl implements AppInfoService {
     @Override
     public void deleteById(Long id) {
         appInfoRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteBatchById(List<Long> appInfoIdList) {
+        appInfoRepository.deleteByIdIn(appInfoIdList);
     }
 
 }

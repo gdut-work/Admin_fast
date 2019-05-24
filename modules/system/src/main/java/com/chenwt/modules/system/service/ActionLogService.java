@@ -38,12 +38,12 @@ public interface ActionLogService {
     /**
      * 删除指指定ID日志
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     void deleteId(Long id);
 
     /**
      * 清空日志
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     void emptyLog();
 }

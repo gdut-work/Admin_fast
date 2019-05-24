@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -62,4 +63,11 @@ public interface AppInfoRepository extends JpaRepository<AppInfo, Long>, JpaSpec
      * @return
      */
     List<AppInfo> findByIdIn(List<Long> appInfoIdList);
+
+    /**
+     * 删除
+     * @param appInfoIdList
+     */
+    @Transactional(rollbackFor = Exception.class)
+    void deleteByIdIn(List<Long> appInfoIdList);
 }

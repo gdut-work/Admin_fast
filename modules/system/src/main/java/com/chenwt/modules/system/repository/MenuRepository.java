@@ -52,14 +52,14 @@ public interface MenuRepository extends BaseRepository<Menu, Long> {
      * @param pid 父菜单ID
      * @param notId 需要排除的菜单ID
      */
-    public List<Menu> findByPidAndIdNot(Sort sort, long pid, long notId);
+    List<Menu> findByPidAndIdNot(Sort sort, long pid, long notId);
 
     /**
      * 取消菜单与角色之间的关系
      * @param id 菜单ID
      */
     @Modifying
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Query(value = "DELETE FROM sys_role_menu WHERE menu_id = ?1", nativeQuery = true)
-    public Integer cancelRoleJoin(Long id);
+    Integer cancelRoleJoin(Long id);
 }

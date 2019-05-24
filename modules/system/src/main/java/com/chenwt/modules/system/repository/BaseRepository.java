@@ -31,7 +31,7 @@ public interface BaseRepository<T, ID> extends JpaRepository<T,ID> {
      * @return 更新数量
      */
     @Modifying
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Query("update #{#entityName} set status = ?1  where id in ?2 and status <> " + StatusConst.DELETE)
-    public Integer updateStatus(Byte status, List<Long> id);
+    Integer updateStatus(Byte status, List<Long> id);
 }

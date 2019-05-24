@@ -4,8 +4,8 @@ import com.chenwt.admin.business.domain.entity.AppCommand;
 import com.chenwt.admin.business.domain.projection.AppCommandProjection;
 import com.chenwt.common.enums.StatusEnum;
 import org.springframework.data.domain.Page;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -52,7 +52,7 @@ public interface AppCommandService {
      * @param ids
      * @return
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     Boolean updateStatus(StatusEnum statusEnum, List<Long> ids);
 
     /**

@@ -36,7 +36,7 @@ public class DeptServiceImpl implements DeptService {
      * @param id 部门管理ID
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Dept getById(Long id) {
         return deptRepository.findById(id).orElse(null);
     }
@@ -102,7 +102,7 @@ public class DeptServiceImpl implements DeptService {
      * 状态(启用，冻结，删除)/批量状态处理
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateStatus(StatusEnum statusEnum, List<Long> ids){
         // 获取与之关联的所有部门
         Set<Dept> treeDepts = new HashSet<>();

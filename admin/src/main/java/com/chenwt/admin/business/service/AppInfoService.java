@@ -62,4 +62,10 @@ public interface AppInfoService {
      * @param id
      */
     void deleteById(Long id);
+
+    /**
+     * 批量删除
+     * @param appInfoIdList
+     */
+    void deleteBatchById(List<Long> appInfoIdList);
 }

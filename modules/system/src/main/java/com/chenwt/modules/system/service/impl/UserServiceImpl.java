@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
      * @return 返回分页数据
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Page<User> getPageList(User user) {
         // 创建分页对象
         PageRequest page = PageSort.pageRequest(Sort.Direction.ASC);
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
      * @param userList 用户实体类
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public List<User> save(List<User> userList){
         return userRepository.saveAll(userList);
     }
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
      * 状态(启用，冻结，删除)/批量状态处理
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateStatus(StatusEnum statusEnum, List<Long> ids){
         // 联级删除与角色之间的关联
         if(statusEnum == StatusEnum.DELETE){

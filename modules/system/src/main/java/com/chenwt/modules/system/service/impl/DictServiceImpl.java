@@ -29,7 +29,7 @@ public class DictServiceImpl implements DictService {
      * @param id 字典ID
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Dict getById(Long id) {
         return dictRepository.findById(id).orElse(null);
     }
@@ -78,7 +78,7 @@ public class DictServiceImpl implements DictService {
      * 状态(启用，冻结，删除)/批量状态处理
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateStatus(StatusEnum statusEnum, List<Long> idList){
         return dictRepository.updateStatus(statusEnum.getCode(),idList) > 0;
     }

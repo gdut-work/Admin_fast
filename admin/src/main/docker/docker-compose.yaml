@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  app-mysql:
+    container_name: app-mysql
+    image: registry.cn-shenzhen.aliyuncs.com/chenwt/app-mysql:1.0
+    privileged: true
+    volumes:
+      - /usr/application/app/data/mysql:/var/lib/mysql
+    restart: always
+    # ports:
+    #  - 3306:3306
+
+  app-back:
+    container_name: app-back
+    image: registry.cn-shenzhen.aliyuncs.com/chenwt/app-back:1.0
+    volumes:
+      - /usr/application/app/data/upload:/app
+    restart: always
+    # ports:
+    #  - 8080:8080
+    depends_on:
+      - app-mysql

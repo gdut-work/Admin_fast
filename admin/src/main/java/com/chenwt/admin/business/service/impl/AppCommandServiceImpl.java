@@ -66,7 +66,6 @@ public class AppCommandServiceImpl implements AppCommandService {
 
     @Override
     public void exec(Long appCommandId, List<Long> appInfoIdList) {
-        //todo
         AppCommand appCommand = getById(appCommandId);
         if (null != appCommand){
             String command = appCommand.getCommand();

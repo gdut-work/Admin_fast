@@ -48,6 +48,6 @@ public interface DictService {
     /**
      * 状态(启用，冻结，删除)/批量状态处理
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     Boolean updateStatus(StatusEnum statusEnum, List<Long> idList);
 }

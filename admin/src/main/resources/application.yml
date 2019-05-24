@@ -16,4 +16,4 @@ spring:
       max-request-size: 10MB
 
   profiles:
-    active: app
+    active: @activatedProperties@

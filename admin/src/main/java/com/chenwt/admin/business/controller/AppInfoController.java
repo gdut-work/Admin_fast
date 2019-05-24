@@ -59,8 +59,7 @@ public class AppInfoController implements Serializable {
 	@RequiresPermissions("business:appInfo:delete")
 	@ResponseBody
 	public ResultVo delete(@RequestParam(value = "ids", required = false) List<Long> ids){
-		//todo
-//		appInfoService.deleteById(id);
+		appInfoService.deleteBatchById(ids);
 		return ResultVoUtil.DELETE_SUCCESS;
 	}
 }

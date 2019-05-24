@@ -89,6 +89,7 @@ public class AppWebSocketServer {
                 registerAppInfo(websocketClientInfoBeanJson);
             }else if (type.equals(Constants.RESPONSE_MESSAGE)){
                 AppWebSocketServer appWebSocketServer = WebSocketMapUtil.get(session.getId());
+                //todo
                 responseApp(appWebSocketServer.getPhone(),websocketClientInfoBeanJson);
             }else {}
 

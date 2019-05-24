@@ -31,7 +31,7 @@ public class RoleServiceImpl implements RoleService {
      * @param id 用户ID
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Set<Role> getUserOkRoleList(Long id) {
         Byte status = StatusEnum.OK.getCode();
         return roleRepository.findByUsers_IdAndStatus(id, status);
@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
      * @param id 角色ID
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Role getById(Long id) {
         return roleRepository.findById(id).orElse(null);
     }
@@ -101,7 +101,7 @@ public class RoleServiceImpl implements RoleService {
      * 状态(启用，冻结，删除)/批量状态处理
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateStatus(StatusEnum statusEnum, List<Long> ids){
         // 删除角色时取消与角色和菜单的关联
         if(statusEnum == StatusEnum.DELETE){

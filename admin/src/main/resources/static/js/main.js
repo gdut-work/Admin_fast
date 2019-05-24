@@ -181,27 +181,42 @@ layui.use(['element', 'form', 'layer', 'upload'], function () {
     //post方式异步-按钮button操作状态
     $(document).on("click", ".ajax-post-button", function () {
         var checked = [];
-        var url = $(this).attr("data-url");
+        var that = $(this);
+        var url = that.attr("data-url");
+        var msg = that.data("msg");
 
-        //全部操作
-        if ($(this).hasClass("all-param")) {
-            $.post(url, function (result) {
-                $.fn.Messager(result);
+        if (msg !== undefined) {
+            layer.confirm(msg + '？', {
+                title: '提示',
+                btn: ['确认', '取消']
+            }, function () {
+                operator();
             });
-            return;
+        }else{
+            operator();
         }
 
-        var tdcheckbox = $(".admin-table td .admin-checkbox :checkbox:checked");
-        if (tdcheckbox.length > 0) {
-            tdcheckbox.each(function (key, val) {
-                checked.push("ids=" + $(val).attr("value"));
-            });
-            $.post(url, checked.join("&"), function (result) {
-                $.fn.Messager(result);
-            });
-        } else {
-            layer.msg('请选择一条记录');
+        function operator() {
+            //全部操作
+            if (that.hasClass("all-param")) {
+                $.post(url, function (result) {
+                    $.fn.Messager(result);
+                });
+            }else{
+                var tdcheckbox = $(".admin-table td .admin-checkbox :checkbox:checked");
+                if (tdcheckbox.length > 0) {
+                    tdcheckbox.each(function (key, val) {
+                        checked.push("ids=" + $(val).attr("value"));
+                    });
+                    $.post(url, checked.join("&"), function (result) {
+                        $.fn.Messager(result);
+                    });
+                } else {
+                    layer.msg('请选择一条记录');
+                }
+            }
         }
+
     });
 
     /* 添加/修改弹出层 */

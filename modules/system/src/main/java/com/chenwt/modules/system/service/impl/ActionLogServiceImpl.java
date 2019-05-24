@@ -24,7 +24,7 @@ public class ActionLogServiceImpl implements ActionLogService {
      * @param id 日志ID
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ActionLog getById(Long id) {
         return actionLogRepository.findById(id).orElse(null);
     }
@@ -64,7 +64,7 @@ public class ActionLogServiceImpl implements ActionLogService {
      * 删除指指定ID日志
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteId(Long id){
         actionLogRepository.deleteById(id);
     }
@@ -73,7 +73,7 @@ public class ActionLogServiceImpl implements ActionLogService {
      * 清空日志
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void emptyLog(){
         actionLogRepository.deleteAll();
     }

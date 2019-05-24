@@ -15,6 +15,7 @@ import com.chenwt.component.actionLog.action.UserAction;
 import com.chenwt.component.actionLog.annotation.ActionLog;
 import com.chenwt.component.actionLog.annotation.EntityParam;
 import com.chenwt.component.excel.ExcelUtil;
+import com.chenwt.component.fileUpload.FileUpload;
 import com.chenwt.component.fileUpload.config.properties.UploadProjectProperties;
 import com.chenwt.component.shiro.ShiroUtil;
 import com.chenwt.modules.system.domain.Role;
@@ -257,11 +258,7 @@ public class UserController {
     public void picture(String p, HttpServletResponse response) throws IOException {
         String defaultPath = "/images/user-picture.jpg";
         if (!(StringUtils.isEmpty(p) || p.equals(defaultPath))) {
-            UploadProjectProperties properties = SpringContextUtil.getBean(UploadProjectProperties.class);
-            String fuPath = properties.getFilePath();
-            String spPath = properties.getStaticPath().replace("*", "");
-            String s = fuPath + p.replace(spPath, "");
-            File file = new File(fuPath + p.replace(spPath, ""));
+            File file = FileUpload.getStaticFile(p);
             if (file.exists()) {
                 FileCopyUtils.copy(new FileInputStream(file), response.getOutputStream());
                 return;

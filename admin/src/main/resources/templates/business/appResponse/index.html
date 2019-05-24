@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="pull-right screen-btn-group">
-                <a class="layui-btn ajax-get" data-msg="您是否确认清空响应" th:href="@{/usiness/appResponse/delete}">
+                <a class="layui-btn ajax-get" data-msg="您是否确认清空响应" th:href="@{/business/appResponse/delete}">
                     <i class="fa fa-trash"></i> 清空响应</a>
             </div>
         </div>
@@ -49,8 +49,8 @@
                 <tr th:each="item:${list}">
                     <td><label class="admin-checkbox"><input type="checkbox" th:value="${item.id}">
                         <i class="layui-icon layui-icon-ok"></i></label></td>
-                    <td th:text="${item.phone}">用户名</td>
                     <td th:text="${item.appId}">客户Id</td>
+                    <td th:text="${item.phone}">手机号</td>
                     <td th:text="${item.context}">响应内容</td>
                     <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
                     <td>
