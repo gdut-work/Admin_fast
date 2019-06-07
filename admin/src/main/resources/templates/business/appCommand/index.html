@@ -78,7 +78,7 @@
                     <td>
                         <a class="open-popup" data-title="编辑指令" th:attr="data-url=@{'/business/appCommand/edit/'+${item.id}}"  data-size="460,357" href="#">编辑</a>
                         <a class="open-popup" data-title="详细信息" th:attr="data-url=@{'/business/appCommand/detail/'+${item.id}}"  data-size="800,600" href="#">详细</a>
-                        <a class="ajax-get" data-msg="您是否确认删除" th:href="@{/business/appCommand/status(ids=${item.id})}">删除</a>
+<!--                        <a class="ajax-get" data-msg="您是否确认删除" th:href="@{'/business/appCommand/status/'+${item.id}}">删除</a>-->
 
 
                         <a th:if="${item.status} == 1" class="open-popup" data-title="执行指令" th:attr="data-url=@{'/business/appCommand/toExec/'+${item.id}}" data-size="800,600" href="#">执行</a>
