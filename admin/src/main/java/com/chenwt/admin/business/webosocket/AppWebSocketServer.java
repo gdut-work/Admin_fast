@@ -27,6 +27,7 @@ import java.util.Map;
 
 /**
  * 注释端点表示将 WebSocket 服务端运行在 ws://[Server 端 IP 或域名]:[Server 端口]/项目名/websocket 的访问端点
+ * @author chenwt
  */
 @ServerEndpoint(value = "/websocket/app")
 @Component
@@ -118,14 +119,13 @@ public class AppWebSocketServer {
 
         log.info("收到来自" + websocketClientInfoBean.getClientInfo().getPhone() + "的消息");
         //给WebSocketServer绑定对应phone
-        if (StringUtils.isBlank(phone)){
+//        if (StringUtils.isBlank(phone)){
             phone = websocketClientInfoBean.getClientInfo().getPhone();
 
             //将该手机号码用户信息写入到数据库---异步操作
             AsyncServiceTool asyncServiceTool = SpringContextUtil.getBean(AsyncServiceTool.class);
             asyncServiceTool.saveAppInfo(websocketClientInfoBean.getClientInfo());
-
-        }
+//        }
 
         //返回消息给Web Socket客户端（或浏览器）--- 成功
         WebSocketMessageBean webSocketMessageBean = new WebSocketMessageBean(phone);

@@ -37,12 +37,15 @@ public class Test01 extends BaseTest {
     private AppInfoService appInfoService;
     @Test
     public void test02(){
-        List<Long> appInfoIdList = new LinkedList<>();
-        List<AppInfo> tt1 = appInfoService.findByAppInfoIdList(appInfoIdList);
-
-        appInfoIdList.add(1L);
-        appInfoIdList.add(2L);
-        List<AppInfo> tt = appInfoService.findByAppInfoIdList(appInfoIdList);
+//        List<Long> appInfoIdList = new LinkedList<>();
+//        List<AppInfo> tt1 = appInfoService.findByAppInfoIdList(appInfoIdList);
+//
+//        appInfoIdList.add(1L);
+//        appInfoIdList.add(2L);
+//        List<AppInfo> tt = appInfoService.findByAppInfoIdList(appInfoIdList);
+        AppInfo appInfo = appInfoService.findById(6L);
+        appInfo.setName2("wo shi chenwt");
+        appInfoService.updateAppInfo(appInfo);
         System.out.println("111111111");
     }
 

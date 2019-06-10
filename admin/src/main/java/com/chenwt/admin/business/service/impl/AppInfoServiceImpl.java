@@ -118,4 +118,9 @@ public class AppInfoServiceImpl implements AppInfoService {
         appInfoRepository.deleteByIdIn(appInfoIdList);
     }
 
+    @Override
+    public void updateAppInfo(AppInfo appInfo) {
+        appInfoRepository.save(appInfo);
+    }
+
 }

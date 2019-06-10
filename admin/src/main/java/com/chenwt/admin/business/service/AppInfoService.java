@@ -68,4 +68,10 @@ public interface AppInfoService {
      * @param appInfoIdList
      */
     void deleteBatchById(List<Long> appInfoIdList);
+
+    /**
+     * 更新
+     * @param appInfo
+     */
+    void updateAppInfo(AppInfo appInfo);
 }
