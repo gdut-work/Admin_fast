@@ -45,7 +45,11 @@ public interface AppCommandRepository extends BaseRepository<AppCommand, Long>, 
             "ON t1.create_by = t2.id " +
             "where t1.status != 3 " +
             "and if(:status is NULL,1=1,t1.status = :status) " +
-            "and if(:title is NULL,1=1,t1.title LIKE CONCAT('%', :title,'%'))", nativeQuery = true)
+            "and if(:title is NULL,1=1,t1.title LIKE CONCAT('%', :title,'%'))"
+            , countQuery = "SELECT COUNT(t1.id) FROM app_command t1 LEFT JOIN sys_user t2 ON t1.create_by = t2.id where t1.status != 3 " +
+            "and if(:status is NULL,1=1,t1.status = :status) " +
+            "and if(:title is NULL,1=1,t1.title LIKE CONCAT('%', :title,'%')) "
+            , nativeQuery = true)
     Page<AppCommandProjection> getPageList(@Param("status")Byte status, @Param("title") String title, Pageable page);
 
     /**

@@ -46,7 +46,12 @@ public interface AppInfoRepository extends JpaRepository<AppInfo, Long>, JpaSpec
             "where 1=1 " +
             "and if(:phone is NULL,1=1,t.phone LIKE CONCAT('%',:phone,'%')) " +
             "and if(:status = 1,t.phone in(:onLinePhoneStr),1=1) " +
-            "and if(:status = 2,t.phone not in(:onLinePhoneStr),1=1)",nativeQuery = true)
+            "and if(:status = 2,t.phone not in(:onLinePhoneStr),1=1)"
+            ,countQuery = "SELECT COUNT(t.id) from app_info t where 1=1 " +
+            "and if(:phone is NULL,1=1,t.phone LIKE CONCAT('%',:phone,'%')) " +
+            "and if(:status = 1,t.phone in(:onLinePhoneStr),1=1) " +
+            "and if(:status = 2,t.phone not in(:onLinePhoneStr),1=1) "
+            ,nativeQuery = true)
     Page<AppInfoProjection> getPageList(@Param("status") Integer status, @Param("phone") String phone, @Param("onLinePhoneStr") String onLinePhoneStr, Pageable page);
 
     /**

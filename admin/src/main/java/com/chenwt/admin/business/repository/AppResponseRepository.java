@@ -38,6 +38,8 @@ public interface AppResponseRepository extends JpaRepository<AppResponse, Long>,
             "ON t1.app_id = t2.id " +
             "where 1=1 " +
             "and if(:phone is NULL,1=1,t2.phone LIKE CONCAT('%', :phone,'%'))"
+            , countQuery = "select count(t1.id) FROM app_response t1 LEFT JOIN app_info t2 ON t1.app_id = t2.id where 1=1 " +
+            "and if(:phone is NULL,1=1,t2.phone LIKE CONCAT('%', :phone,'%'))"
             , nativeQuery = true)
     Page<AppResponseProjection> getPageList(@Param("phone") String phone, Pageable page);
 
