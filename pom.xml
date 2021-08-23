@@ -35,7 +35,7 @@
         <lombok.version>1.18.2</lombok.version>
         <ehcache.version>2.10.5</ehcache.version>
         <mysql.connector.version>5.1.46</mysql.connector.version>
-        <jsoup.version>1.11.3</jsoup.version>
+        <jsoup.version>1.14.2</jsoup.version>
         <!--excel工具框架版本：component.excel-->
         <poi.version>4.0.0</poi.version>
         <!--jwt处理框架版本：component.jwt-->
